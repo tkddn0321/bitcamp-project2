@@ -2,14 +2,12 @@ package bitcamp.project2.command;
 
 import bitcamp.project2.util.Calender;
 import bitcamp.project2.util.Prompt;
-import bitcamp.project2.vo.ToDoList;
-
 import java.time.LocalDate;
 import java.util.LinkedList;
 
 
 public class ToDoListCommand {
-    LinkedList<ToDoList> toDoLists = new LinkedList<>();
+ /*   LinkedList<ToDoList> toDoLists = new LinkedList<>();
 
     public void addSchedule(String type) {
         ToDoList toDoList = new ToDoList();
@@ -31,4 +29,5 @@ public class ToDoListCommand {
 
         System.out.println("일정이 등록되었습니다.");
     }
+    */
 }
