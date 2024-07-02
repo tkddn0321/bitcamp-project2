@@ -3,16 +3,13 @@
  */
 package bitcamp.project2;
 
-import bitcamp.project2.command.AddList;
-import bitcamp.project2.command.FindList;
 import bitcamp.project2.util.Calender;
 import bitcamp.project2.util.Prompt;
+import bitcamp.project2.command.ToDoListCommand;
 
 public class App {
     Calender calender = new Calender();
     String[] mainMenu = new String[]{"일정 추가", "일정 확인", "일정 변경", "일정 삭제", "달력 확인", "종료"};
-    AddList addList = new AddList();
-    FindList findList = new FindList();
     public static void main(String[] args) {
       /*  String underlineText = "\033[4mThis text is underlined\033[0m";
         String strikethroughText = "\033[9mThis text has strikethrough\033[0m";
@@ -26,6 +23,7 @@ public class App {
     //메인로딩
     void loading() {
         calender.settingCalender();//달력 세팅
+        ToDoListCommand toDoListCommand = new ToDoListCommand();
         String command;
         printMainMenu();
         while (true) {
@@ -46,10 +44,10 @@ public class App {
                     }
                     switch (menuTitle) {
                         case "일정 추가":
-                            addList.listAdd();
+                            toDoListCommand.addSchedule();
                             break;
                         case "일정 확인":
-                            findList.listFind();
+                            System.out.println(menuTitle);
                             break;
                         case "일정 변경":
                             System.out.println(menuTitle);
