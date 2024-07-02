@@ -3,12 +3,126 @@
  */
 package bitcamp.project2;
 
+import bitcamp.project2.util.Prompt;
+
+import java.util.Calendar;
+import java.util.Scanner;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    static Calendar cal = Calendar.getInstance();
+    static int week_count = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+    static int day_count = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    static String[] days = new String[day_count];
+    static String[] weeks = {"일","월","화","수","목","금","토"};
+    static int month = cal.get(Calendar.MONTH)+1;
+   static  String[] diarys = new String[day_count];
+    static int [][] data = new int[week_count][7];
+
+    String[] mainMenu = new String[]{"달력확인", "일정추가", "일정삭제", "세부일정확인", "종료하기"};
+    public static void main(String[] args) {
+      /*  String underlineText = "\033[4mThis text is underlined\033[0m";
+        String strikethroughText = "\033[9mThis text has strikethrough\033[0m";
+
+        System.out.println(underlineText);
+        System.out.println(strikethroughText);*/
+
+        new App().calender();
+        new App().loading();
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    void calender()
+    {
+        for (int i=0; i<day_count; i++) {
+            diarys[i] = new String();
+        }
+
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        int first_day = cal.get(Calendar.DAY_OF_WEEK);
+
+        int count = 1;
+
+        for (int i=0; i<data.length; i++) { // 달력의 정보를 보여주기 위하여 이차원배열에 데이터 저장
+            for(int j=0; j<data[i].length; j++) {
+                if(i==0 && j<first_day-1) {
+                    data[i][j] = 0;
+                }
+                else if (count > day_count) {
+                    // 이번 달의 마지막 날을 초과한 경우
+                    data[i][j] = 0;
+                }
+                else {
+                    // 그 외의 경우는 날짜값을 할당하고, 날짜값 1 증가
+                    data[i][j] = count++;
+                }
+
+            }
+        }
     }
+
+    void loading() {
+        String command;
+        printMainMenu();
+        while (true) {
+            try {
+                command = Prompt.input("메인 > ");
+                if (command.equals("메뉴") || command.equals("menu")) {
+                    printMainMenu();
+                }else {
+                    int menuNumber = Integer.parseInt(command);
+                    String menuTitle = getMenuTitle(mainMenu, menuNumber);
+                    if (menuTitle == null) {
+                        System.out.println("유효한 숫자를 입력 해주세요.");
+                        continue;
+                    }
+                    else if (menuTitle.equals("종료"))
+                    {
+                        break;
+                    }
+                    switch (menuTitle) {
+                        case "달력확인":
+                            Calender.show_calendar(data, diarys);
+                            break;
+                        case "일정추가":
+                            //expenditureController.expenditureMenuController(menuTitle);
+                            break;
+                        case "일정삭제":
+                            //findAllController.findAllMenuController(menuTitle);
+                            break;
+                        case "세부일정확인":
+                            //findAllController.findAllMenuController(menuTitle);
+                            break;
+                        default:
+                            System.out.println("유효하지않은 메인메뉴 번호입니다. 다시 입력해주세요");
+                    }
+                }
+            }catch (NumberFormatException e)
+            {
+                System.out.println("문자 입력은 menu 만 가능합니다. 다시 입력해주세요");
+            }
+        }
+        Prompt.close();
+    }
+
+    // 메뉴타이틀 추출 메서드
+    String getMenuTitle(String[] menu, int menuNumber ) {
+        return validation(menu, menuNumber) ? menu[menuNumber-1] : null;
+    }
+
+    // 입력값 유효판별 메서드
+    Boolean validation(String[] menu, int menuNumber)
+    {
+        return menuNumber >= 1 && menuNumber <= menu.length;
+    }
+
+    // 메인 메뉴목록 출력 메서드
+    void printMainMenu()
+    {
+        System.out.println("========== 메뉴 ===========");
+        for(int i = 0; i < mainMenu.length; i++)
+        {
+            System.out.printf("  %d  |  %s\n", i+1,mainMenu[i]);
+        }
+        System.out.println("===========================");
+    }
+
 }
