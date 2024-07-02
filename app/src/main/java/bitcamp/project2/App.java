@@ -3,11 +3,14 @@
  */
 package bitcamp.project2;
 
+import bitcamp.project2.util.Calender;
 import bitcamp.project2.util.Prompt;
+import bitcamp.project2.vo.ToDoList;
+import bitcamp.project2.command.ToDoListCommand;
 
 public class App {
     Calender calender = new Calender();
-    String[] mainMenu = new String[]{"달력확인", "일정추가", "일정삭제", "세부일정확인", "종료"};
+    String[] mainMenu = new String[]{"일정 추가", "일정 확인", "일정 변경", "일정 삭제", "달력 확인", "종료"};
     public static void main(String[] args) {
       /*  String underlineText = "\033[4mThis text is underlined\033[0m";
         String strikethroughText = "\033[9mThis text has strikethrough\033[0m";
@@ -40,17 +43,20 @@ public class App {
                         break;
                     }
                     switch (menuTitle) {
-                        case "달력확인":
-                            Calender.show_calendar(calender.getData(), calender.getDiarys());
+                        case "일정 추가":
+                            
                             break;
-                        case "일정추가":
+                        case "일정 확인":
                             System.out.println(menuTitle);
                             break;
-                        case "일정삭제":
+                        case "일정 변경":
                             System.out.println(menuTitle);
                             break;
-                        case "세부일정확인":
+                        case "일정 삭제":
                             System.out.println(menuTitle);
+                            break;
+                        case "달력 확인":
+                            Calender.promptAndShowCalendar();
                             break;
                         default:
                             System.out.println("유효하지않은 메인메뉴 번호입니다. 다시 입력해주세요");
