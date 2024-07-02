@@ -47,7 +47,7 @@ public class App {
                             toDoListCommand.addSchedule();
                             break;
                         case "일정 확인":
-                            System.out.println(menuTitle);
+                            toDoListCommand.listCheck();
                             break;
                         case "일정 변경":
                             System.out.println(menuTitle);
@@ -82,7 +82,7 @@ public class App {
     }
 
     // 메인 메뉴목록 출력 메서드
-    void printMainMenu()
+   public void printMainMenu()
     {
         System.out.println("========== 메뉴 ===========");
         for(int i = 0; i < mainMenu.length; i++)
