@@ -29,7 +29,9 @@ public class ToDoListCommand {
     String[] listMenu = new String[]{"상세일정확인", "일정체크", "뒤로가기"};
 
     public void addSchedule() {
+        abc:
         while (true) {
+
             DailyList dailyList = new DailyList();
 
             try {
@@ -44,6 +46,7 @@ public class ToDoListCommand {
                 System.out.println("올바른 날짜 형식이 아닙니다.");
                 continue;
             }
+
             while (true) {
                 try {
                     String timeStr = Prompt.input("시간을 입력하세요 (HH:mm): ");
@@ -53,16 +56,25 @@ public class ToDoListCommand {
                     System.out.println("올바른 시간 형식이 아닙니다.");
                 }
             }
+
             dailyList.setContent(Prompt.input("상세 일정을 추가해주세요: "));
             dailyList.setNo(dailyLists.size() + 1);
             dailyList.setCheck(false);
             dailyLists.add(dailyList);
 
-            String answer = Prompt.input("더 추가하시겠습니까? (y/n): ");
-            if (answer.toLowerCase().equals("n")) {
-                System.out.println("일정이 등록되었습니다.");
-                break;
+            while (true) {
+                String answer = Prompt.input("더 추가하시겠습니까? (y/n): ");
+                if (answer.equalsIgnoreCase("n")) {
+                    System.out.println("일정이 등록되었습니다.");
+                    break;
+                } else if ((answer.equalsIgnoreCase("y"))) {
+                    System.out.println("추가 등록합니다.");
+                    continue abc;
+                } else {
+                    System.out.println("올바른 형식이 아닙니다.");
+                }
             }
+            break;
         }
         App a1 = new App();
         a1.printMainMenu();
