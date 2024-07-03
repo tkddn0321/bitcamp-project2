@@ -1,7 +1,7 @@
 package bitcamp.project2.util;
 
 import bitcamp.project2.command.ToDoListCommand;
-
+import java.util.Date;
 import java.util.Calendar;
 
 public class Calender {
@@ -29,7 +29,7 @@ public class Calender {
         this.data = data;
     }
 
-   static ToDoListCommand toDoListCommand = new ToDoListCommand();
+   static ToDoListCommand toDoListCommand = ToDoListCommand.getInstance();
 
     public void settingCalender()
     {
@@ -59,7 +59,7 @@ public class Calender {
             }
         }
     }
-
+/*
     public static void check_count(String[] diary) {
         for(int i=0; i<day_count; i++) {
             if (!diary[i].isEmpty())
@@ -67,7 +67,7 @@ public class Calender {
             else
                 days[i] = null;
         }
-    }
+    }*/
     // 달력을 보여주는 메소드
     public static void showCalendar(int year, int month) {
         Calendar cal = Calendar.getInstance();
@@ -92,7 +92,7 @@ public class Calender {
                 }
             }
         }
-
+        //년 월 주 단위로 표시하는 메뉴
         System.out.println("      <" + year + "년 " + month + "월 달력" + ">     ");
         System.out.println("------------------------------");
         for (int i = 0; i < 7; i++) {
@@ -106,16 +106,15 @@ public class Calender {
         }
         System.out.println();
         System.out.println("------------------------------");
-
+        //일 출력해주는 for문
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[i].length; j++) {
                 if (data[i][j] == 0) {
                     System.out.print("    ");
                 } else {
                     String dayStr = String.format("%2d", data[i][j]);
-                   // for (int a = 0 ; i < toDoListCommand.dailyLists.size(); a++)
-                    //{
-
+                    if (toDoListCommand.dailyLists.size() == 0)
+                    {
                         if (j == 0) {
                             System.out.printf("\033[0;31m%4s\033[0m", dayStr); // 일요일 빨간색
                         } else if (j == 6) {
@@ -123,7 +122,28 @@ public class Calender {
                         } else {
                             System.out.printf("%4s", dayStr);
                         }
-                    //}
+                    }else
+                    {
+                    for (int a = 0 ; a < toDoListCommand.dailyLists.size(); a++)
+                    {
+                        Date date = toDoListCommand.dailyLists.get(a).getDate();
+                        cal.setTime(date);
+                        int day = cal.get(Calendar.DAY_OF_MONTH);
+                        String listDay = Integer.toString(day);
+                        if (listDay.equals(dayStr))
+                        {
+                            System.out.printf("\033[0;33m%4s\033[0m", dayStr);
+                        }else {
+                            if (j == 0) {
+                                System.out.printf("\033[0;31m%4s\033[0m", dayStr); // 일요일 빨간색
+                            } else if (j == 6) {
+                                System.out.printf("\033[0;34m%4s\033[0m", dayStr); // 토요일 파란색
+                            } else {
+                                System.out.printf("%4s", dayStr);
+                            }
+                        }
+                    }
+                    }
                 }
             }
             System.out.println();

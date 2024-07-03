@@ -11,19 +11,13 @@ public class App {
     Calender calender = new Calender();
     String[] mainMenu = new String[]{"일정 추가", "일정 확인", "일정 변경", "일정 삭제", "달력 확인", "종료"};
     public static void main(String[] args) {
-      /*  String underlineText = "\033[4mThis text is underlined\033[0m";
-        String strikethroughText = "\033[9mThis text has strikethrough\033[0m";
-
-        System.out.println(underlineText);
-        System.out.println(strikethroughText);*/
-
         new App().loading();
     }
 
     //메인로딩
     void loading() {
         calender.settingCalender();//달력 세팅
-        ToDoListCommand toDoListCommand = new ToDoListCommand();
+        ToDoListCommand toDoListCommand = ToDoListCommand.getInstance();
         String command;
         printMainMenu();
         while (true) {

@@ -16,6 +16,15 @@ import bitcamp.project2.util.DailyList;
 
 
 public class ToDoListCommand {
+    private static ToDoListCommand instance;
+    public static ToDoListCommand getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new ToDoListCommand();
+        }
+        return instance;
+    }
     public ArrayList<DailyList> dailyLists = new ArrayList<>();
     String[] listMenu = new String[]{"상세일정확인", "일정체크", "뒤로가기"};
 
@@ -35,15 +44,15 @@ public class ToDoListCommand {
                 System.out.println("올바른 날짜 형식이 아닙니다.");
                 continue;
             }
-
-            try {
-                String timeStr = Prompt.input("시간을 입력하세요 (HH:mm): ");
-                dailyList.setTime(java.sql.Time.valueOf(timeStr + ":00"));
-            } catch (Exception e) {
-                System.out.println("올바른 시간 형식이 아닙니다.");
-                continue;
+            while (true) {
+                try {
+                    String timeStr = Prompt.input("시간을 입력하세요 (HH:mm): ");
+                    dailyList.setTime(java.sql.Time.valueOf(timeStr + ":00"));
+                    break;
+                } catch (Exception e) {
+                    System.out.println("올바른 시간 형식이 아닙니다.");
+                }
             }
-
             dailyList.setContent(Prompt.input("상세 일정을 추가해주세요: "));
             dailyList.setNo(dailyLists.size() + 1);
             dailyList.setCheck(false);
