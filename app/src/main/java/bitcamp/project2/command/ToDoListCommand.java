@@ -10,13 +10,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import bitcamp.project2.util.DailyList;
-import org.checkerframework.checker.units.qual.A;
 
 
 public class ToDoListCommand {
     public ArrayList<DailyList> dailyLists = new ArrayList<>();
-    private Calender calender;
-
+    String[] listMenu = new String[]{"상세일정확인", "일정체크", "뒤로가기"};
 
     public void addSchedule() {
         Calender.showCalendar(LocalDate.now().getYear(), LocalDate.now().getMonthValue());
@@ -42,7 +40,7 @@ public class ToDoListCommand {
 
             dailyList.setContent(Prompt.input("상세 일정을 추가해주세요: "));
             dailyList.setNo(dailyLists.size());
-
+            dailyList.setCheck(false);
             dailyLists.add(dailyList);
 
             String answer = Prompt.input("더 추가하시겠습니까? (y/n): ");
@@ -54,6 +52,7 @@ public class ToDoListCommand {
         App a1 = new App();
         a1.printMainMenu();
     }
+
 
     public void listCheck()
     {
@@ -79,19 +78,134 @@ public class ToDoListCommand {
                 }
             });
 
+            System.out.println("==============================");
             // 정렬된 리스트 출력
             for (DailyList test : filteredLists) {
-                System.out.println(test.getTime() + " " + test.getContent());
+                if(test.getCheck())
+                {
+                    System.out.println("\033[9m"+test.getTime() + " | " + test.getContent()+"\033[0m");
+                }else
+                {
+                    System.out.println(test.getTime() + " | " + test.getContent());
+                }
             }
+            System.out.println("==============================");
+
         } catch (IllegalArgumentException e) {
             System.out.println("올바른 날짜 형식이 아닙니다.");
         } catch (Exception e) {
             System.out.println("예상치 못한 오류가 발생했습니다: " + e.getMessage());
         }
 
-        // 메뉴 출력
-        App a1 = new App();
-        a1.printMainMenu();
+    }
+
+    public void dailyListCheck()
+    {
+        try {
+            // 사용자로부터 날짜 입력 받기
+            String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
+            java.sql.Date inputDate = java.sql.Date.valueOf(dateStr);
+
+            // 날짜가 일치하는 DailyList 객체 필터링
+            List<DailyList> filteredLists = new ArrayList<>();
+            for (Object obj : dailyLists.toArray()) {
+                DailyList test = (DailyList) obj;
+                if (test.getDate().equals(inputDate)) {
+                    filteredLists.add(test);
+                }
+            }
+
+            // 필터링된 리스트를 시간 기준으로 정렬
+            Collections.sort(filteredLists, new Comparator<DailyList>() {
+                @Override
+                public int compare(DailyList d1, DailyList d2) {
+                    return d1.getTime().compareTo(d2.getTime());
+                }
+            });
+
+            System.out.println("==============================");
+            for (DailyList test : filteredLists) {
+                System.out.printf(test.getTime() + " " + test.getContent());
+                String flag = Prompt.input(" > 현재 일정을 진행 하셨습니까? y / n");
+                if (flag.equals("y"))
+                {
+                    for(int i = 1 ; i <= dailyLists.size(); i++) {
+                        if (dailyLists.get(i).equals(test))
+                        {
+                            DailyList dailyList = dailyLists.get(i);
+                            dailyList.setCheck(true);
+                            dailyLists.set(i, dailyList);
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.println("==============================");
+        } catch (IllegalArgumentException e) {
+            System.out.println("올바른 날짜 형식이 아닙니다.");
+        } catch (Exception e) {
+            System.out.println("예상치 못한 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+   public void listMenu() {
+        String command;
+        printMainMenu();
+        while (true) {
+            try {
+                command = Prompt.input("일정 확인 > ");
+                if (command.equals("메뉴") || command.equals("menu")) {
+                    printMainMenu();
+                }else {
+                    int menuNumber = Integer.parseInt(command);
+                    String menuTitle = getMenuTitle(listMenu, menuNumber);
+                    if (menuTitle == null) {
+                        System.out.println("유효한 숫자를 입력 해주세요.");
+                        continue;
+                    }
+                    else if (menuTitle.equals("뒤로가기"))
+                    {
+                        break;
+                    }
+                    switch (menuTitle) {
+                        case "상세일정확인":
+                            listCheck();
+                            break;
+                        case "일정체크":
+                           dailyListCheck();
+                            break;
+                  
+                        default:
+                            System.out.println("유효하지않은 메인메뉴 번호입니다. 다시 입력해주세요");
+                    }
+                }
+            }catch (NumberFormatException e)
+            {
+                System.out.println("문자 입력은 menu 만 가능합니다. 다시 입력해주세요");
+            }
+        }
+    }
+
+    // 메뉴타이틀 추출 메서드
+    String getMenuTitle(String[] menu, int menuNumber ) {
+        return validation(menu, menuNumber) ? menu[menuNumber-1] : null;
+    }
+
+    // 입력값 유효판별 메서드
+    Boolean validation(String[] menu, int menuNumber)
+    {
+        return menuNumber >= 1 && menuNumber <= menu.length;
+    }
+
+    // 메인 메뉴목록 출력 메서드
+    public void printMainMenu()
+    {
+        System.out.println("========== 메뉴 ===========");
+        for(int i = 0; i < listMenu.length; i++)
+        {
+            System.out.printf("  %d  |  %s\n", i+1,listMenu[i]);
+        }
+        System.out.println("===========================");
     }
 
 }

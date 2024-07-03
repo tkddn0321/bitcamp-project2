@@ -9,18 +9,30 @@ public class DailyList {
     Date date;
     Time time;
     String content;
+    Boolean check;
+
+    public DailyList(){}
+
+    public DailyList(Date date, Time time, String content) {
+        this.date = date;
+        this.time = time;
+        this.content = content;
+    }
+
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        DailyList dailyLIst = (DailyList) object;
-        return no == dailyLIst.no && Objects.equals(date, dailyLIst.date) && Objects.equals(time, dailyLIst.time) && Objects.equals(content, dailyLIst.content);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DailyList dailyList = (DailyList) o;
+        return Objects.equals(date, dailyList.date) &&
+                Objects.equals(time, dailyList.time) &&
+                Objects.equals(content, dailyList.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(no, date, time, content);
+        return Objects.hash(date, time, content);
     }
 
     public int getNo() {
@@ -54,4 +66,8 @@ public class DailyList {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Boolean getCheck() { return check; }
+
+    public void setCheck(Boolean check) { this.check = check; }
 }

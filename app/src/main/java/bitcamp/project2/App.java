@@ -47,7 +47,7 @@ public class App {
                             toDoListCommand.addSchedule();
                             break;
                         case "일정 확인":
-                            toDoListCommand.listCheck();
+                            toDoListCommand.listMenu();
                             break;
                         case "일정 변경":
                             System.out.println(menuTitle);
