@@ -20,14 +20,17 @@ public class ToDoListCommand {
     String[] listMenu = new String[]{"상세일정확인", "일정체크", "뒤로가기"};
 
     public void addSchedule() {
-        Calender.showCalendar(LocalDate.now().getYear(), LocalDate.now().getMonthValue());
-
         while (true) {
             DailyList dailyList = new DailyList();
 
             try {
-                String dateStr = Prompt.input("추가하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
-                dailyList.setDate(java.sql.Date.valueOf(dateStr));
+                String dateStr = Prompt.input("변경을 원하고자 하는 월을 입력해주세요 (yyyy-MM): ");
+                String[] dateParts = dateStr.split("-");
+                int year = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                Calender.showCalendar(year, month);
+                String dateStr2 = Prompt.input("변경을 원하고자 하는 일을 입력해주세요 (dd): ");
+                dailyList.setDate(Date.valueOf(dateStr + "-" + dateStr2));
             } catch (Exception e) {
                 System.out.println("올바른 날짜 형식이 아닙니다.");
                 continue;
@@ -59,6 +62,11 @@ public class ToDoListCommand {
 
     public void listCheck() {
         try {
+            if(dailyLists.size() == 0)
+            {
+                System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+                return;
+            }
             // 사용자로부터 날짜 입력 받기
             String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
             java.sql.Date inputDate = java.sql.Date.valueOf(dateStr);
@@ -101,6 +109,11 @@ public class ToDoListCommand {
 
     public void dailyListCheck() {
         try {
+            if(dailyLists.size() == 0)
+            {
+                System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+                return;
+            }
             // 사용자로부터 날짜 입력 받기
             String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
             java.sql.Date inputDate = java.sql.Date.valueOf(dateStr);
@@ -181,7 +194,12 @@ public class ToDoListCommand {
     }
 
     public void updateSchedule() {
-        // listSchedule();
+        if(dailyLists.size() == 0)
+        {
+            System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+            return;
+        }
+        printAll();
         int dailyListNo = Prompt.inputInt("번호를 입력하세요 :");
         DailyList dailyListToUpdate = null;
         for (Object obj : dailyLists.toArray()) {
@@ -223,7 +241,13 @@ public class ToDoListCommand {
     }
 
     public void deleteSchedule() {
-        // 목록 띄우고 번호 묻기
+        if(dailyLists.size() == 0)
+        {
+            System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+            return;
+        }
+        printAll();
+        // 목록 띄우고 번호 묻기1
         int dailyListNo = Prompt.inputInt("삭제하실 번호를 입력하세요 : ");
         DailyList dailyListToRemove = null;
         for (Object obj : dailyLists.toArray()) {
@@ -239,6 +263,24 @@ public class ToDoListCommand {
         } else {
             System.out.println("해당 번호가 없습니다.");
         }
+    }
+
+    public void printAll()
+    {
+
+        Collections.sort(dailyLists, new Comparator<DailyList>() {
+            @Override
+            public int compare(DailyList d1, DailyList d2) {
+                return d1.getTime().compareTo(d2.getTime());
+            }
+        });
+        System.out.println("==============================");
+
+        for(DailyList dailyList : dailyLists)
+        {
+            System.out.println(dailyList.getNo() + " | " + dailyList.getDate() + " | " +dailyList.getTime() + " | " + dailyList.getContent());
+        }
+        System.out.println("==============================");
     }
 
     // 메뉴타이틀 추출 메서드

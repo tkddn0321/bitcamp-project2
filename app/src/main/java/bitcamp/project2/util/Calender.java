@@ -1,5 +1,7 @@
 package bitcamp.project2.util;
 
+import bitcamp.project2.command.ToDoListCommand;
+
 import java.util.Calendar;
 
 public class Calender {
@@ -11,7 +13,6 @@ public class Calender {
     static int month = cal.get(Calendar.MONTH)+1;
     String[] diary = new String[day_count];
     int [][] data = new int[week_count][7];
-
     public String[] getDiary() {
         return diary;
     }
@@ -27,7 +28,7 @@ public class Calender {
     public void setData(int[][] data) {
         this.data = data;
     }
-
+    
     public void settingCalender()
     {
         for (int i=0; i<day_count; i++) {
