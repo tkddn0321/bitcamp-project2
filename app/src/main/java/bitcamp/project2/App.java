@@ -47,13 +47,13 @@ public class App {
                             toDoListCommand.addSchedule();
                             break;
                         case "일정 확인":
-                            toDoListCommand.listMenu();
+                            toDoListCommand.listSchedule();
                             break;
                         case "일정 변경":
-                            System.out.println(menuTitle);
+                            toDoListCommand.updateSchedule();
                             break;
                         case "일정 삭제":
-                            System.out.println(menuTitle);
+                            toDoListCommand.deleteSchedule();
                             break;
                         case "달력 확인":
                             Calender.promptAndShowCalendar();

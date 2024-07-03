@@ -3,6 +3,9 @@ package bitcamp.project2.command;
 import bitcamp.project2.App;
 import bitcamp.project2.util.Calender;
 import bitcamp.project2.util.Prompt;
+
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +42,7 @@ public class ToDoListCommand {
             }
 
             dailyList.setContent(Prompt.input("상세 일정을 추가해주세요: "));
-            dailyList.setNo(dailyLists.size());
+            dailyList.setNo(dailyLists.size() + 1);
             dailyList.setCheck(false);
             dailyLists.add(dailyList);
 
@@ -54,8 +57,7 @@ public class ToDoListCommand {
     }
 
 
-    public void listCheck()
-    {
+    public void listCheck() {
         try {
             // 사용자로부터 날짜 입력 받기
             String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
@@ -81,11 +83,9 @@ public class ToDoListCommand {
             System.out.println("==============================");
             // 정렬된 리스트 출력
             for (DailyList test : filteredLists) {
-                if(test.getCheck())
-                {
-                    System.out.println("\033[9m"+test.getTime() + " | " + test.getContent()+"\033[0m");
-                }else
-                {
+                if (test.getCheck()) {
+                    System.out.println("\033[9m" + test.getTime() + " | " + test.getContent() + "\033[0m");
+                } else {
                     System.out.println(test.getTime() + " | " + test.getContent());
                 }
             }
@@ -99,8 +99,7 @@ public class ToDoListCommand {
 
     }
 
-    public void dailyListCheck()
-    {
+    public void dailyListCheck() {
         try {
             // 사용자로부터 날짜 입력 받기
             String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
@@ -127,11 +126,9 @@ public class ToDoListCommand {
             for (DailyList test : filteredLists) {
                 System.out.printf(test.getTime() + " " + test.getContent());
                 String flag = Prompt.input(" > 현재 일정을 진행 하셨습니까? y / n");
-                if (flag.equals("y"))
-                {
-                    for(int i = 1 ; i <= dailyLists.size(); i++) {
-                        if (dailyLists.get(i).equals(test))
-                        {
+                if (flag.equals("y")) {
+                    for (int i = 1; i <= dailyLists.size(); i++) {
+                        if (dailyLists.get(i).equals(test)) {
                             DailyList dailyList = dailyLists.get(i);
                             dailyList.setCheck(true);
                             dailyLists.set(i, dailyList);
@@ -148,7 +145,7 @@ public class ToDoListCommand {
         }
     }
 
-   public void listMenu() {
+    public void listSchedule() {
         String command;
         printMainMenu();
         while (true) {
@@ -156,15 +153,13 @@ public class ToDoListCommand {
                 command = Prompt.input("일정 확인 > ");
                 if (command.equals("메뉴") || command.equals("menu")) {
                     printMainMenu();
-                }else {
+                } else {
                     int menuNumber = Integer.parseInt(command);
                     String menuTitle = getMenuTitle(listMenu, menuNumber);
                     if (menuTitle == null) {
                         System.out.println("유효한 숫자를 입력 해주세요.");
                         continue;
-                    }
-                    else if (menuTitle.equals("뒤로가기"))
-                    {
+                    } else if (menuTitle.equals("뒤로가기")) {
                         break;
                     }
                     switch (menuTitle) {
@@ -172,38 +167,90 @@ public class ToDoListCommand {
                             listCheck();
                             break;
                         case "일정체크":
-                           dailyListCheck();
+                            dailyListCheck();
                             break;
-                  
+
                         default:
                             System.out.println("유효하지않은 메인메뉴 번호입니다. 다시 입력해주세요");
                     }
                 }
-            }catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 System.out.println("문자 입력은 menu 만 가능합니다. 다시 입력해주세요");
             }
         }
     }
 
+    public void updateSchedule() {
+        // listSchedule();
+        int dailyListNo = Prompt.inputInt("번호를 입력하세요 :");
+        DailyList dailyListToUpdate = null;
+        for (Object obj : dailyLists.toArray()) {
+            DailyList dailyList = (DailyList) obj;
+            if (dailyList.getNo() == dailyListNo) {
+                dailyListToUpdate = dailyList;
+                break;
+            }
+        }
+        if (dailyListToUpdate != null) {
+            while (true) {
+                try {
+                    String dateStr = Prompt.input("변경하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
+                    dailyListToUpdate.setDate(Date.valueOf(dateStr));
+                } catch (Exception e) {
+                    System.out.println("올바른 날짜 형식이 아닙니다.");
+                    continue;
+                }
+
+                try {
+                    String timeStr = Prompt.input("시간을 입력하세요 (HH:mm): ");
+                    dailyListToUpdate.setTime(Time.valueOf(timeStr + ":00"));
+                } catch (Exception e) {
+                    System.out.println("올바른 시간 형식이 아닙니다.");
+                    continue;
+                }
+                dailyListToUpdate.setContent(Prompt.input("상세 일정을 추가해주세요 : ", dailyListToUpdate.getContent()));
+                System.out.println("변경했습니다.");
+                break;
+            }
+        } else {
+            System.out.println("해당 번호가 없습니다.");
+        }
+    }
+
+    public void deleteSchedule() {
+        // 목록 띄우고 번호 묻기
+        int dailyListNo = Prompt.inputInt("삭제하실 번호를 입력하세요 : ");
+        DailyList dailyListToRemove = null;
+        for (Object obj : dailyLists.toArray()) {
+            DailyList dailyList = (DailyList) obj;
+            if (dailyList.getNo() == dailyListNo) {
+                dailyListToRemove = dailyList;
+                break;
+            }
+        }
+        if (dailyListToRemove != null) {
+            dailyLists.remove(dailyListToRemove);
+            System.out.printf("%s %s %s 일정을 삭제했습니다.\n", dailyListToRemove.getDate(), dailyListToRemove.getTime(), dailyListToRemove.getContent());
+        } else {
+            System.out.println("해당 번호가 없습니다.");
+        }
+    }
+
     // 메뉴타이틀 추출 메서드
-    String getMenuTitle(String[] menu, int menuNumber ) {
-        return validation(menu, menuNumber) ? menu[menuNumber-1] : null;
+    String getMenuTitle(String[] menu, int menuNumber) {
+        return validation(menu, menuNumber) ? menu[menuNumber - 1] : null;
     }
 
     // 입력값 유효판별 메서드
-    Boolean validation(String[] menu, int menuNumber)
-    {
+    Boolean validation(String[] menu, int menuNumber) {
         return menuNumber >= 1 && menuNumber <= menu.length;
     }
 
     // 메인 메뉴목록 출력 메서드
-    public void printMainMenu()
-    {
+    public void printMainMenu() {
         System.out.println("========== 메뉴 ===========");
-        for(int i = 0; i < listMenu.length; i++)
-        {
-            System.out.printf("  %d  |  %s\n", i+1,listMenu[i]);
+        for (int i = 0; i < listMenu.length; i++) {
+            System.out.printf("  %d  |  %s\n", i + 1, listMenu[i]);
         }
         System.out.println("===========================");
     }
