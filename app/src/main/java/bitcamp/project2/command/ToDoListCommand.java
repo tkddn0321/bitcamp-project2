@@ -194,13 +194,13 @@ public class ToDoListCommand {
         if (dailyListToUpdate != null) {
             while (true) {
                 try {
-                    String dateStr = Prompt.input("변경하고자 하는 날짜를 입력해주세요 (yyyy-MM): ");
+                    String dateStr = Prompt.input("변경을 원하고자 하는 월을 입력해주세요 (yyyy-MM): ");
                     String[] dateParts = dateStr.split("-");
                     int year = Integer.parseInt(dateParts[0]);
                     int month = Integer.parseInt(dateParts[1]);
                     Calender.showCalendar(year, month);
-                    String dateStr2 = Prompt.input("변경하고자 하는 날짜를 입력해주세요 (yyyy-MM): ");
-                    dailyListToUpdate.setDate(Date.valueOf(dateStr2));
+                    String dateStr2 = Prompt.input("변경을 원하고자 하는 일을 입력해주세요 (dd): ");
+                    dailyListToUpdate.setDate(Date.valueOf(dateStr + "-" + dateStr2));
                 } catch (Exception e) {
                     System.out.println("올바른 날짜 형식이 아닙니다.");
                     continue;
