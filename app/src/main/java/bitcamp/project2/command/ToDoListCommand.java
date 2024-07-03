@@ -24,12 +24,12 @@ public class ToDoListCommand {
             DailyList dailyList = new DailyList();
 
             try {
-                String dateStr = Prompt.input("변경을 원하고자 하는 월을 입력해주세요 (yyyy-MM): ");
+                String dateStr = Prompt.input("추가하실 연과 월을 입력해주세요 (yyyy-MM): ");
                 String[] dateParts = dateStr.split("-");
                 int year = Integer.parseInt(dateParts[0]);
                 int month = Integer.parseInt(dateParts[1]);
                 Calender.showCalendar(year, month);
-                String dateStr2 = Prompt.input("변경을 원하고자 하는 일을 입력해주세요 (dd): ");
+                String dateStr2 = Prompt.input("추가하실 일을 입력해주세요 (dd): ");
                 dailyList.setDate(Date.valueOf(dateStr + "-" + dateStr2));
             } catch (Exception e) {
                 System.out.println("올바른 날짜 형식이 아닙니다.");
@@ -61,6 +61,7 @@ public class ToDoListCommand {
 
 
     public void listCheck() {
+        printAll();
         try {
             if(dailyLists.size() == 0)
             {
@@ -108,6 +109,7 @@ public class ToDoListCommand {
     }
 
     public void dailyListCheck() {
+        printAll();
         try {
             if(dailyLists.size() == 0)
             {
@@ -140,7 +142,7 @@ public class ToDoListCommand {
                 System.out.printf(test.getTime() + " " + test.getContent());
                 String flag = Prompt.input(" > 현재 일정을 진행 하셨습니까? y / n");
                 if (flag.equals("y")) {
-                    for (int i = 1; i <= dailyLists.size(); i++) {
+                    for (int i = 0; i < dailyLists.size(); i++) {
                         if (dailyLists.get(i).equals(test)) {
                             DailyList dailyList = dailyLists.get(i);
                             dailyList.setCheck(true);

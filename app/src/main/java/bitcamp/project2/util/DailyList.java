@@ -13,12 +13,6 @@ public class DailyList {
 
     public DailyList(){}
 
-    public DailyList(Date date, Time time, String content) {
-        this.date = date;
-        this.time = time;
-        this.content = content;
-    }
-
 
     @Override
     public boolean equals(Object o) {

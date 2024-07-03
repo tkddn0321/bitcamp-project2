@@ -28,7 +28,9 @@ public class Calender {
     public void setData(int[][] data) {
         this.data = data;
     }
-    
+
+   static ToDoListCommand toDoListCommand = new ToDoListCommand();
+
     public void settingCalender()
     {
         for (int i=0; i<day_count; i++) {
@@ -111,13 +113,17 @@ public class Calender {
                     System.out.print("    ");
                 } else {
                     String dayStr = String.format("%2d", data[i][j]);
-                    if (j == 0) {
-                        System.out.printf("\033[0;31m%4s\033[0m", dayStr); // 일요일 빨간색
-                    } else if (j == 6) {
-                        System.out.printf("\033[0;34m%4s\033[0m", dayStr); // 토요일 파란색
-                    } else {
-                        System.out.printf("%4s", dayStr);
-                    }
+                   // for (int a = 0 ; i < toDoListCommand.dailyLists.size(); a++)
+                    //{
+
+                        if (j == 0) {
+                            System.out.printf("\033[0;31m%4s\033[0m", dayStr); // 일요일 빨간색
+                        } else if (j == 6) {
+                            System.out.printf("\033[0;34m%4s\033[0m", dayStr); // 토요일 파란색
+                        } else {
+                            System.out.printf("%4s", dayStr);
+                        }
+                    //}
                 }
             }
             System.out.println();
