@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Calender { // 클래스 이름 수정
     static Calendar cal = Calendar.getInstance();
@@ -139,14 +140,22 @@ public class Calender { // 클래스 이름 수정
     }
 
     public static void promptAndShowCalendar() {
-        String dateStr = Prompt.input("확인하려는 월을 입력하세요 : (yyyy-MM) ");
-        try {
-            String[] dateParts = dateStr.split("-");
-            int year = Integer.parseInt(dateParts[0]);
-            int month = Integer.parseInt(dateParts[1]);
-            showCalendar(year, month);
-        } catch (Exception e) {
-            System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
+        abc:
+        while (true) {
+            try {
+                String dateStr = Prompt.input("확인하려는 월을 입력하세요 : (yyyy-MM) ");
+                if(!Pattern.matches("\\d{4}-\\d{2}", dateStr)){
+                    System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
+                    continue abc;
+                }
+                String[] dateParts = dateStr.split("-");
+                int year = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                showCalendar(year, month);
+            } catch (Exception e) {
+                System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
+            }
+            break;
         }
     }
 }

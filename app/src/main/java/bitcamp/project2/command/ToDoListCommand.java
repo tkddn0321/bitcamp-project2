@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import bitcamp.project2.util.DailyList;
 
@@ -36,6 +37,10 @@ public class ToDoListCommand {
 
             try {
                 String dateStr = Prompt.input("추가하실 연과 월을 입력해주세요 (yyyy-MM): ");
+                if(!Pattern.matches("\\d{4}-\\d{2}", dateStr)){
+                    System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
+                    continue abc;
+                }
                 String[] dateParts = dateStr.split("-");
                 int year = Integer.parseInt(dateParts[0]);
                 int month = Integer.parseInt(dateParts[1]);
