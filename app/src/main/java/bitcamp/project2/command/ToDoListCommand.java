@@ -243,7 +243,8 @@ public class ToDoListCommand {
         printAll();
         int dailyListNo = Prompt.inputInt("번호를 입력하세요. 뒤로가기(0) :");
         if (dailyListNo == 0) {
-            printAll();
+            App a1 = new App();
+            a1.printMainMenu();
             return;
         }
         DailyList dailyListToUpdate = null;
@@ -301,7 +302,8 @@ public class ToDoListCommand {
         // 목록 띄우고 번호 묻기1
         int dailyListNo = Prompt.inputInt("삭제하실 번호를 입력하세요 뒤로가기(0) : ");
         if (dailyListNo == 0) {
-            printAll();
+            App a1 = new App();
+            a1.printMainMenu();
             return;
         }
         DailyList dailyListToRemove = null;
