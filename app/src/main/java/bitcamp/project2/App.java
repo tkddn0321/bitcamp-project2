@@ -19,6 +19,12 @@ public class App {
         calender.settingCalender();//달력 세팅
         ToDoListCommand toDoListCommand = ToDoListCommand.getInstance();
         String command;
+        System.out.println(" _____          ___              _               _  ");
+        System.out.println("(_   _)        (  _`\\           ( )     _       ( )_");
+        System.out.println("  | |   _      | | ) |   _      | |    (_)  ___ | ,_)");
+        System.out.println("  | | /'_`\\    | | | ) /'_`\\    | |  _ | |/',__)| |  ");
+        System.out.println("  | |( (_) )   | |_) |( (_) )   | |_( )| |\\__, \\| |_ ");
+        System.out.println("  (_)`\\___/'   (____/'`\\___/'   (____/'(_)(____/`\\__)");
         printMainMenu();
         while (true) {
             try {
