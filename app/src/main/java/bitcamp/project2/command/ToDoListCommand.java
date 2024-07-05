@@ -239,6 +239,8 @@ public class ToDoListCommand {
                 System.out.println("문자 입력은 menu 만 가능합니다. 다시 입력해주세요");
             }
         }
+        System.out.println("");
+        printMainMenu();
     }
 
     public void updateSchedule() {
@@ -337,18 +339,26 @@ public class ToDoListCommand {
 
     public void printAll()
     {
-
+        Date dateCheck = null;
         Collections.sort(dailyLists, new Comparator<DailyList>() {
             @Override
             public int compare(DailyList d1, DailyList d2) {
                 return d1.getDate().compareTo(d2.getDate());
             }
         });
-        System.out.println("==============================");
 
         for(DailyList dailyList : dailyLists)
         {
-            System.out.println(dailyList.getNo() + " | " + dailyList.getDate() + " | " +dailyList.getTime() + " | " + dailyList.getContent());
+            if(dateCheck == null || !dateCheck.equals(dailyList.getDate()))
+            {
+                System.out.println("==============================");
+                System.out.println(dailyList.getNo() + " | " + dailyList.getDate() + " | " +dailyList.getTime() + " | " + dailyList.getContent());
+                dateCheck = dailyList.getDate();
+            }else
+            {
+                System.out.println(dailyList.getNo() + " | " + dailyList.getDate() + " | " +dailyList.getTime() + " | " + dailyList.getContent());
+            }
+
         }
         System.out.println("==============================");
     }
