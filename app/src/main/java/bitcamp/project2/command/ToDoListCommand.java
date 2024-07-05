@@ -99,7 +99,12 @@ public class ToDoListCommand {
                 return;
             }
             // 사용자로부터 날짜 입력 받기
-            String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
+            String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd) 뒤로가기 (0): ");
+            if(dateStr.equals("0")) {
+                App a1 = new App();
+                a1.printMainMenu();
+                return;
+            }
             java.sql.Date inputDate = java.sql.Date.valueOf(dateStr);
 
             // 날짜가 일치하는 DailyList 객체 필터링
@@ -151,6 +156,11 @@ public class ToDoListCommand {
             }
             // 사용자로부터 날짜 입력 받기
             String dateStr = Prompt.input("확인하고자 하는 날짜를 입력해주세요 (yyyy-MM-dd): ");
+            if(dateStr.equals("0")) {
+                App a1 = new App();
+                a1.printMainMenu();
+                return;
+            }
             java.sql.Date inputDate = java.sql.Date.valueOf(dateStr);
 
             // 날짜가 일치하는 DailyList 객체 필터링
