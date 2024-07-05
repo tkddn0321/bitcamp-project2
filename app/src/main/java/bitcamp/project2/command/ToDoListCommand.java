@@ -319,7 +319,7 @@ public class ToDoListCommand {
         Collections.sort(dailyLists, new Comparator<DailyList>() {
             @Override
             public int compare(DailyList d1, DailyList d2) {
-                return d1.getTime().compareTo(d2.getTime());
+                return d1.getDate().compareTo(d2.getDate());
             }
         });
         System.out.println("==============================");
