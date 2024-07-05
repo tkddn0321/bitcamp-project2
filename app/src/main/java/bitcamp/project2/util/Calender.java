@@ -1,5 +1,6 @@
 package bitcamp.project2.util;
 
+import bitcamp.project2.App;
 import bitcamp.project2.command.ToDoListCommand;
 import java.util.Date;
 import java.util.Calendar;
@@ -156,6 +157,9 @@ public class Calender { // 클래스 이름 수정
                 System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
             }
             break;
+
         }
+        App a1 = new App();
+        a1.printMainMenu();
     }
 }

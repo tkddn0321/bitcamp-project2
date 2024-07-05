@@ -92,6 +92,8 @@ public class ToDoListCommand {
             if(dailyLists.size() == 0)
             {
                 System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+                System.out.println("");
+                printMainMenu();
                 return;
             }
             // 사용자로부터 날짜 입력 받기
@@ -131,7 +133,8 @@ public class ToDoListCommand {
         } catch (Exception e) {
             System.out.println("예상치 못한 오류가 발생했습니다: " + e.getMessage());
         }
-
+        System.out.println("");
+        printMainMenu();
     }
 
     public void dailyListCheck() {
@@ -140,6 +143,8 @@ public class ToDoListCommand {
             if(dailyLists.size() == 0)
             {
                 System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+                System.out.println("");
+                printMainMenu();
                 return;
             }
             // 사용자로부터 날짜 입력 받기
@@ -201,6 +206,9 @@ public class ToDoListCommand {
                         System.out.println("유효한 숫자를 입력 해주세요.");
                         continue;
                     } else if (menuTitle.equals("뒤로가기")) {
+                        System.out.println("");
+                        App a1 = new App();
+                        a1.printMainMenu();
                         break;
                     }
                     switch (menuTitle) {
@@ -225,6 +233,9 @@ public class ToDoListCommand {
         if(dailyLists.size() == 0)
         {
             System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+            System.out.println("");
+            App a1 = new App();
+            a1.printMainMenu();
             return;
         }
         printAll();
@@ -266,12 +277,18 @@ public class ToDoListCommand {
         } else {
             System.out.println("해당 번호가 없습니다.");
         }
+        System.out.println("");
+        App a1 = new App();
+        a1.printMainMenu();
     }
 
     public void deleteSchedule() {
         if(dailyLists.size() == 0)
         {
             System.out.println("현재 배열에 저장되어있는 값이 없습니다");
+            System.out.println("");
+            App a1 = new App();
+            a1.printMainMenu();
             return;
         }
         printAll();
@@ -291,6 +308,9 @@ public class ToDoListCommand {
         } else {
             System.out.println("해당 번호가 없습니다.");
         }
+        System.out.println("");
+        App a1 = new App();
+        a1.printMainMenu();
     }
 
     public void printAll()
