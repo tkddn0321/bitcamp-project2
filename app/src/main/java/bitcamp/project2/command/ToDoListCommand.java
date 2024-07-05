@@ -32,14 +32,16 @@ public class ToDoListCommand {
     public void addSchedule() {
         abc:
         while (true) {
-
             DailyList dailyList = new DailyList();
 
             try {
-                String dateStr = Prompt.input("추가하실 연과 월을 입력해주세요 (yyyy-MM): ");
-                if(!Pattern.matches("\\d{4}-\\d{2}", dateStr)){
+                String dateStr = Prompt.input("추가하실 연과 월을 입력해주세요 (yyyy-MM) 뒤로가기(0): ");
+                if (dateStr.equals("0")) {
+                    break;
+                }
+                else if(!Pattern.matches("\\d{4}-\\d{2}", dateStr)){
                     System.out.println("올바른 날짜 형식이 아닙니다. yyyy-MM 형식으로 입력해주세요.");
-                    continue abc;
+                    continue;
                 }
                 String[] dateParts = dateStr.split("-");
                 int year = Integer.parseInt(dateParts[0]);
@@ -239,7 +241,11 @@ public class ToDoListCommand {
             return;
         }
         printAll();
-        int dailyListNo = Prompt.inputInt("번호를 입력하세요 :");
+        int dailyListNo = Prompt.inputInt("번호를 입력하세요. 뒤로가기(0) :");
+        if (dailyListNo == 0) {
+            printAll();
+            return;
+        }
         DailyList dailyListToUpdate = null;
         for (Object obj : dailyLists.toArray()) {
             DailyList dailyList = (DailyList) obj;
@@ -293,7 +299,11 @@ public class ToDoListCommand {
         }
         printAll();
         // 목록 띄우고 번호 묻기1
-        int dailyListNo = Prompt.inputInt("삭제하실 번호를 입력하세요 : ");
+        int dailyListNo = Prompt.inputInt("삭제하실 번호를 입력하세요 뒤로가기(0) : ");
+        if (dailyListNo == 0) {
+            printAll();
+            return;
+        }
         DailyList dailyListToRemove = null;
         for (Object obj : dailyLists.toArray()) {
             DailyList dailyList = (DailyList) obj;
