@@ -97,7 +97,7 @@ public class Calender { // 클래스 이름 수정
         System.out.println("------------------------------");
 
         // 날짜 중복 출력을 방지하기 위한 Set 객체를 초기화합니다.
-        Set<Integer> printedDays = new HashSet<>();
+        Set<String> printedDays = new HashSet<>();
 
         // 일 출력해주는 for문
         for (int i = 0; i < data.length; i++) {
@@ -112,10 +112,11 @@ public class Calender { // 클래스 이름 수정
                         Date date = toDoListCommand.dailyLists.get(a).getDate();
                         Calendar dateCal = Calendar.getInstance();
                         dateCal.setTime(date);
+                        int dateMonth = dateCal.get(Calendar.MONTH) + 1; // 월은 0부터 시작
                         int day = dateCal.get(Calendar.DAY_OF_MONTH);
-
-                        if (day == data[i][j] && !printedDays.contains(day)) {
-                            printedDays.add(day);
+                        String dayKey = dateMonth + "-" + day;
+                        if (dateMonth == month && day == data[i][j] && !printedDays.contains(dayKey)) {
+                            printedDays.add(dayKey);
                             System.out.printf("\033[0;33m%4s\033[0m", dayStr);
                             isPrinted = true;
                             break;
