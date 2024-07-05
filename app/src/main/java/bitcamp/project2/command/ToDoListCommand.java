@@ -239,8 +239,6 @@ public class ToDoListCommand {
                 System.out.println("문자 입력은 menu 만 가능합니다. 다시 입력해주세요");
             }
         }
-        System.out.println("");
-        printMainMenu();
     }
 
     public void updateSchedule() {
